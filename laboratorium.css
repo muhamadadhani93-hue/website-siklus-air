@@ -1,0 +1,229 @@
+/* ============================================
+   SIKLUS AIR — Modul Laboratorium Air
+   ============================================ */
+
+.lab-page {
+  background: linear-gradient(180deg, #B8E4F9 0%, #E8F6FD 60%, #fff 100%);
+}
+
+.lab-content {
+  padding: var(--sp-md) var(--content-padding);
+  flex: 1;
+}
+
+.lab-title {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-extrabold);
+  color: var(--color-text);
+  margin-bottom: var(--sp-xs);
+}
+
+.lab-subtitle {
+  font-size: var(--fs-md);
+  color: var(--color-text-light);
+  margin-bottom: var(--sp-lg);
+}
+
+/* ---------- Split Screen Simulator ---------- */
+.lab-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-lg);
+}
+
+@media (max-width: 400px) {
+  .lab-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lab-panel {
+  border-radius: var(--radius-lg);
+  padding: var(--sp-md);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--shadow-card);
+}
+
+.lab-panel-desert {
+  background: linear-gradient(180deg, #FFE0B2 0%, #FFCC80 50%, #F4A460 80%, #D2B48C 100%);
+}
+
+.lab-panel-arctic {
+  background: linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 40%, #90CAF9 70%, #cff 100%);
+}
+
+.lab-panel-title {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--sp-sm);
+  position: relative;
+  z-index: 2;
+}
+
+.lab-panel-desert .lab-panel-title { color: #BF360C; }
+.lab-panel-arctic .lab-panel-title { color: #0D47A1; }
+
+.lab-panel-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--sp-sm);
+  position: relative;
+  z-index: 2;
+}
+
+/* Water Container in each panel */
+.lab-water-container {
+  width: 80%;
+  height: 100px;
+  background: rgba(255,255,255,0.3);
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  border-top: none;
+  position: relative;
+  overflow: hidden;
+  margin: var(--sp-sm) 0;
+}
+
+.lab-water-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -2px;
+  right: -2px;
+  height: 4px;
+  background: rgba(255,255,255,0.5);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.lab-water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, rgba(93,173,226,0.7), rgba(30,144,255,0.8));
+  border-radius: 0 0 calc(var(--radius-md) - 2px) calc(var(--radius-md) - 2px);
+  transition: height 0.5s var(--ease-out);
+}
+
+.lab-water-fill.desert-water {
+  height: 80%;
+}
+
+.lab-water-fill.arctic-water {
+  height: 80%;
+}
+
+/* Vapor particles from water */
+.lab-vapor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.lab-vapor-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+/* Temperature display */
+.lab-temp {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-extrabold);
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+}
+
+.lab-panel-desert .lab-temp { color: #E65100; }
+.lab-panel-arctic .lab-temp { color: #1565C0; }
+
+/* ---------- Sun Slider ---------- */
+.lab-slider-section {
+  padding: var(--sp-lg);
+  background: var(--color-glass-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--sp-lg);
+}
+
+.lab-slider-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-md);
+}
+
+.lab-slider-icon {
+  font-size: 2rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.lab-slider-title {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+}
+
+.lab-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--sp-sm);
+}
+
+.lab-slider-label {
+  font-size: var(--fs-xs);
+  color: var(--color-text-light);
+  font-weight: var(--fw-semibold);
+}
+
+/* ---------- Insight Box ---------- */
+.lab-insight {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-sm);
+  padding: var(--sp-md);
+  background: linear-gradient(135deg, rgba(255,217,61,0.1), rgba(255,167,38,0.08));
+  border: 1.5px solid rgba(255,167,38,0.2);
+  border-radius: var(--radius-md);
+  animation: fadeInUp 0.4s var(--ease-out);
+}
+
+.lab-insight-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.lab-insight-text {
+  font-size: var(--fs-sm);
+  color: var(--color-text);
+  line-height: 1.5;
+  font-weight: var(--fw-medium);
+}
+
+/* ---------- Sun intensity visual ---------- */
+.lab-sun-visual {
+  position: absolute;
+  top: -20px;
+  right: -10px;
+  font-size: 3rem;
+  opacity: 0.3;
+  z-index: 1;
+  transition: all 0.5s var(--ease-out);
+}
+
+.lab-panel-desert .lab-sun-visual {
+  filter: drop-shadow(0 0 10px rgba(255,152,0,0.5));
+}

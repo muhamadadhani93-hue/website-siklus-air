@@ -1,0 +1,289 @@
+/* ============================================
+   SIKLUS AIR — Splash Screen & Home Page
+   ============================================ */
+
+/* ---------- Splash Screen ---------- */
+.splash-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: linear-gradient(180deg, #A8D8F0 0%, #87CEEB 30%, #5DADE2 70%, #1E90FF 100%);
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-splash);
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+  overflow: hidden;
+}
+
+.splash-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Splash — animated background waves */
+.splash-waves {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 220px;
+  overflow: hidden;
+}
+
+.splash-wave {
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  width: 110%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 45% 55% 0 0;
+  animation: waveMotion 4s ease-in-out infinite alternate;
+}
+
+.splash-wave:nth-child(2) {
+  height: 80%;
+  background: rgba(255, 255, 255, 0.1);
+  animation-delay: -1s;
+  animation-duration: 5s;
+}
+
+.splash-wave:nth-child(3) {
+  height: 60%;
+  background: rgba(255, 255, 255, 0.08);
+  animation-delay: -2s;
+  animation-duration: 6s;
+}
+
+@keyframes waveMotion {
+  0% { border-radius: 45% 55% 0 0; transform: translateX(-2%); }
+  100% { border-radius: 55% 45% 0 0; transform: translateX(2%); }
+}
+
+/* Splash — Content */
+.splash-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-lg);
+  animation: fadeInUp 0.8s var(--ease-out);
+}
+
+.splash-globe {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #81C784 30%, #4CAF50 40%, #1E90FF 60%, #0A5EB5 80%);
+  box-shadow: 
+    0 0 40px rgba(30, 144, 255, 0.3),
+    inset -10px -10px 30px rgba(0, 0, 0, 0.15),
+    inset 5px 5px 20px rgba(255, 255, 255, 0.2);
+  animation: float 3s ease-in-out infinite, spin 20s linear infinite;
+  position: relative;
+}
+
+.splash-globe::after {
+  content: '';
+  position: absolute;
+  top: 12%;
+  left: 20%;
+  width: 25%;
+  height: 15%;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  filter: blur(3px);
+}
+
+/* Splash — clouds around globe */
+.splash-cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-full);
+  z-index: 3;
+}
+
+.splash-cloud-1 {
+  width: 70px;
+  height: 22px;
+  top: -10px;
+  right: -30px;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+.splash-cloud-2 {
+  width: 50px;
+  height: 16px;
+  bottom: 10px;
+  left: -25px;
+  animation: float 3s ease-in-out infinite 0.5s;
+}
+
+.splash-title {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-extrabold);
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  letter-spacing: -0.5px;
+}
+
+.splash-title .title-emoji {
+  display: inline-block;
+  animation: wiggle 1.5s ease-in-out infinite;
+}
+
+.splash-subtitle {
+  font-size: var(--fs-md);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: var(--fw-medium);
+  text-align: center;
+  max-width: 280px;
+}
+
+/* Loading bar */
+.splash-loading {
+  width: 200px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-top: var(--sp-md);
+}
+
+.splash-loading-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(255,255,255,0.6), white);
+  border-radius: var(--radius-full);
+  transition: width 2s ease-out;
+}
+
+.splash-loading-bar.animate {
+  width: 100%;
+}
+
+/* Start button */
+.splash-start-btn {
+  padding: 16px 40px;
+  background: white;
+  color: var(--color-ocean);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all var(--transition-normal);
+  animation: none;
+}
+
+.splash-start-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.splash-start-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.splash-start-btn:active {
+  transform: scale(0.97);
+}
+
+/* ---------- Home Page ---------- */
+.home-page {
+  background: linear-gradient(180deg, #B8E4F9 0%, #E8F6FD 60%, #ffffff 100%);
+}
+
+.home-header {
+  padding: var(--sp-xl) var(--content-padding) var(--sp-md);
+  position: relative;
+  z-index: 1;
+}
+
+.home-greeting {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-extrabold);
+  color: var(--color-text);
+  line-height: 1.2;
+  margin-bottom: var(--sp-xs);
+}
+
+.home-greeting .wave-emoji {
+  display: inline-block;
+  animation: wiggle 1.5s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+
+.home-question {
+  font-size: var(--fs-md);
+  color: var(--color-text-light);
+  font-weight: var(--fw-medium);
+}
+
+/* Menu Section */
+.home-menu {
+  padding: var(--sp-md) var(--content-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+  position: relative;
+  z-index: 1;
+}
+
+/* Badge Section (bottom of home) */
+.home-badges {
+  padding: var(--sp-lg) var(--content-padding);
+  position: relative;
+  z-index: 1;
+}
+
+.home-badges-title {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  margin-bottom: var(--sp-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+}
+
+.home-badges-row {
+  display: flex;
+  gap: var(--sp-sm);
+  overflow-x: auto;
+  padding-bottom: var(--sp-sm);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.home-badges-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* Coming Soon Badge */
+.coming-soon {
+  position: relative;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.coming-soon::after {
+  content: 'Segera!';
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--color-warning);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: var(--fw-bold);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}

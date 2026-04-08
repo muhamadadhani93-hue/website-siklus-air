@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description"
+    content="Aplikasi pembelajaran interaktif siklus air untuk siswa kelas 5 SD — IPAS Kurikulum Merdeka. Belajar evaporasi, kondensasi, presipitasi lewat simulasi & game seru!">
+  <meta name="theme-color" content="#87CEEB">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>🌊 Siklus Air — Petualangan Tetes Air</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/splash.css">
+  <link rel="stylesheet" href="css/belajar.css">
+  <link rel="stylesheet" href="css/laboratorium.css">
+  <link rel="stylesheet" href="css/quiz.css">
+  <link rel="stylesheet" href="css/glosarium.css">
+</head>
+
+<body>
+
+  <div id="app">
+
+    <!-- ==================== SPLASH SCREEN ==================== -->
+    <div id="splashScreen" class="splash-screen">
+      <div class="splash-waves">
+        <div class="splash-wave"></div>
+        <div class="splash-wave"></div>
+        <div class="splash-wave"></div>
+      </div>
+
+      <div class="splash-content">
+        <div class="splash-globe" style="position: relative;">
+          <div class="splash-cloud splash-cloud-1"></div>
+          <div class="splash-cloud splash-cloud-2"></div>
+        </div>
+
+        <h1 class="splash-title">
+          <span class="title-emoji">💧</span> Siklus Air
+        </h1>
+        <p class="splash-subtitle">Petualangan Tetes Air — Belajar IPAS Kelas 5 SD</p>
+
+        <div class="splash-loading">
+          <div id="splashLoadingBar" class="splash-loading-bar"></div>
+        </div>
+
+        <button id="splashStartBtn" class="splash-start-btn">
+          🚀 Mulai Petualangan!
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== AUDIO TOGGLE (GLOBAL) ==================== -->
+    <button id="audioToggle" class="audio-toggle" aria-label="Toggle audio">🔊</button>
+
+    <!-- ==================== HOME PAGE ==================== -->
+    <section id="page-home" class="page home-page">
+      <div class="bg-clouds">
+        <div class="bg-cloud"></div>
+        <div class="bg-cloud"></div>
+        <div class="bg-cloud"></div>
+        <div class="bg-cloud"></div>
+      </div>
+
+      <div class="home-header container">
+        <h1 class="home-greeting">
+          Halo, Penjelajah Air! <span class="wave-emoji">👋</span>
+        </h1>
+        <p class="home-question">Mau belajar apa hari ini?</p>
+      </div>
+
+      <div class="home-menu container stagger-children">
+        <!-- Belajar Yuk -->
+        <button class="btn-menu" onclick="AudioManager.playSFX('pop'); App.navigate('belajar')" id="menuBelajar">
+          <div class="menu-icon blue">📖</div>
+          <div class="menu-text">
+            <div class="menu-title">Belajar Yuk!</div>
+            <div class="menu-desc">Kenali siklus air secara interaktif dan seru</div>
+          </div>
+          <span class="menu-arrow">→</span>
+        </button>
+
+        <!-- Laboratorium -->
+        <button class="btn-menu" onclick="AudioManager.playSFX('pop'); App.navigate('lab')" id="menuLab">
+          <div class="menu-icon green">🔬</div>
+          <div class="menu-text">
+            <div class="menu-title">Laboratorium Air</div>
+            <div class="menu-desc">Eksperimen virtual: Gurun vs Kutub!</div>
+          </div>
+          <span class="menu-arrow">→</span>
+        </button>
+
+        <!-- Uji Nyali -->
+        <button class="btn-menu" onclick="AudioManager.playSFX('pop'); App.navigate('quiz')" id="menuQuiz">
+          <div class="menu-icon orange">🎯</div>
+          <div class="menu-text">
+            <div class="menu-title">Uji Nyali</div>
+            <div class="menu-desc">Tes pemahamanmu dengan drag & drop!</div>
+          </div>
+          <span class="menu-arrow">→</span>
+        </button>
+
+        <!-- Kamus -->
+        <button class="btn-menu" onclick="AudioManager.playSFX('pop'); App.navigate('glosarium')" id="menuGlosarium">
+          <div class="menu-icon purple">📚</div>
+          <div class="menu-text">
+            <div class="menu-title">Kamus Bergambar</div>
+            <div class="menu-desc">Pelajari istilah-istilah siklus air</div>
+          </div>
+          <span class="menu-arrow">→</span>
+        </button>
+      </div>
+
+      <!-- Badges -->
+      <div class="home-badges container">
+        <div class="home-badges-title">🏆 Koleksi Lencana</div>
+        <div id="homeBadges" class="home-badges-row"></div>
+      </div>
+    </section>
+
+    <!-- ==================== BELAJAR PAGE ==================== -->
+    <section id="page-belajar" class="page belajar-page">
+      <!-- Header -->
+      <div class="page-header">
+        <button class="btn-back" onclick="BelajarModule.prevStep()">
+          <span class="back-arrow">←</span> Kembali
+        </button>
+        <div style="text-align: right;">
+          <div class="header-title">Belajar Yuk!</div>
+          <div class="header-subtitle">Langkah demi langkah</div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="container" style="padding-top: 8px;">
+        <div class="progress-bar-container">
+          <div class="progress-step">
+            <div id="progressDot1" class="progress-dot active">1</div>
+          </div>
+          <div id="progressLine1" class="progress-line"></div>
+          <div class="progress-step">
+            <div id="progressDot2" class="progress-dot locked">2</div>
+          </div>
+          <div id="progressLine2" class="progress-line"></div>
+          <div class="progress-step">
+            <div id="progressDot3" class="progress-dot locked">3</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Step 1: Kenalan dengan Air ===== -->
+      <div id="belajarStep1" class="belajar-step">
+        <div class="belajar-content container">
+          <h2 class="belajar-step-title">🌊 Kenalan dengan Air</h2>
+          <p class="belajar-step-subtitle">Tahukah kamu? Air yang kamu minum sekarang adalah air yang sama sejak jutaan
+            tahun lalu!</p>
+
+          <div class="water-fact-hero">
+            <div class="dino-text">
+              <span class="dino-emoji">🦕</span>
+              "Kamu minum air yang sama dengan yang diminum Dinosaurus lho!"
+            </div>
+
+            <div class="water-meter">
+              <div class="water-tube">
+                <div class="tube-percent">97%</div>
+                <div class="tube-container">
+                  <div class="tube-fill salty"></div>
+                </div>
+                <div class="tube-label">Air Asin</div>
+                <div class="tube-desc">Lautan & samudera</div>
+              </div>
+
+              <div class="water-tube">
+                <div class="tube-percent">3%</div>
+                <div class="tube-container">
+                  <div class="tube-fill fresh"></div>
+                </div>
+                <div class="tube-label">Air Tawar</div>
+                <div class="tube-desc">Sungai, danau, air tanah</div>
+              </div>
+            </div>
+
+            <div class="card-info" style="margin-top: 24px;">
+              <span class="info-icon">💡</span>
+              <span class="info-text">Dari 100 gelas air di bumi, hanya 3 gelas yang bisa kita minum! Makanya kita harus
+                hemat air ya!</span>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="App.navigate('home')">← Home</button>
+            <button class="btn btn-primary" onclick="BelajarModule.nextStep()">Lanjut →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Step 2: Panggung Siklus ===== -->
+      <div id="belajarStep2" class="belajar-step" style="display: none;">
+        <div class="belajar-content container">
+          <h2 class="belajar-step-title">🎭 Panggung Siklus Air</h2>
+          <p class="belajar-step-subtitle">Tap setiap elemen untuk melihat prosesnya!</p>
+
+          <!-- Interactive Diagram -->
+          <div class="siklus-container" id="siklusContainer">
+            <!-- Tap zones -->
+            <div class="tap-zone tap-zone-sun" id="tapSun">
+              ☀️
+              <span class="tap-label">Tap aku!</span>
+            </div>
+            <div class="tap-zone tap-zone-cloud" id="tapCloud">
+              ☁️
+              <span class="tap-label">Tap aku!</span>
+            </div>
+            <div class="tap-zone tap-zone-rain" id="tapRain">
+              🌧️
+              <span class="tap-label">Tap aku!</span>
+            </div>
+            <div class="tap-zone tap-zone-leaf" id="tapLeaf">
+              🌿
+              <span class="tap-label">Tap aku!</span>
+            </div>
+            <div class="tap-zone tap-zone-mountain" id="tapMountain">
+              ⛰️
+            </div>
+
+            <!-- Particle overlay -->
+            <div id="particlesOverlay" class="particles-overlay"></div>
+          </div>
+
+          <!-- Instruction -->
+          <div class="siklus-instruction">
+            <span class="instr-icon">👆</span>
+            <span class="instr-text">Tap matahari, awan, hujan, atau daun untuk melihat animasi & penjelasannya!</span>
+          </div>
+
+          <!-- Speed control -->
+          <div class="speed-control">
+            <span class="speed-label">🐢 Lambat</span>
+            <input type="range" id="siklusSpeed" class="range-slider" min="0.5" max="3" step="0.5" value="1"
+              style="flex:1;">
+            <span class="speed-label">🐇 Cepat</span>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="BelajarModule.prevStep()">← Kembali</button>
+            <button class="btn btn-primary" onclick="BelajarModule.nextStep()">Lanjut →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Step 3: Cerita Si Tetes Air ===== -->
+      <div id="belajarStep3" class="belajar-step" style="display: none;">
+        <div class="belajar-content container">
+          <h2 class="belajar-step-title">📖 Cerita Si Tetes Air</h2>
+          <p class="belajar-step-subtitle">Dengarkan petualangan Teti si tetes air!</p>
+
+          <div class="story-card">
+            <div class="story-illustration">💧</div>
+            <div class="story-text">
+              <p style="margin-bottom: 12px;">
+                Hai! Namaku <span class="highlight">Teti, si tetes air</span>. Aku tinggal di laut yang luas dan biru.
+                Suatu hari, <span class="highlight">matahari bersinar sangat terik</span>.
+              </p>
+              <p style="margin-bottom: 12px;">
+                Tubuhku mulai terasa ringan dan aku <span class="highlight">terbang ke langit menjadi uap air</span>!
+                Proses ini namanya <span class="highlight">Evaporasi</span>.
+              </p>
+              <p style="margin-bottom: 12px;">
+                Di langit yang tinggi, udara jadi sangat dingin. Aku dan teman-temanku <span class="highlight">berkumpul
+                  menjadi awan</span>. Ini disebut <span class="highlight">Kondensasi</span>.
+              </p>
+              <p style="margin-bottom: 12px;">
+                Awan kami semakin berat karena kebanyakan tetes air. Akhirnya, kami <span class="highlight">jatuh ke
+                  bumi sebagai hujan</span>! Namanya <span class="highlight">Presipitasi</span>.
+              </p>
+              <p style="margin-bottom: 12px;">
+                Aku jatuh di puncak gunung, lalu <span class="highlight">mengalir lewat sungai</span>. Di perjalanan,
+                aku diminum seekor sapi. Setelah sapi berkeringat, aku <span class="highlight">menguap lagi ke
+                  langit</span>!
+              </p>
+              <p>
+                Begitulah <span class="highlight">siklus air terus berputar</span> tanpa pernah berhenti. Dari laut ke
+                langit, dari langit ke bumi, dan kembali lagi! 🔄
+              </p>
+            </div>
+
+            <!-- Audio controls -->
+            <div class="story-audio-controls">
+              <button id="storyPlayBtn" class="story-play-btn" onclick="BelajarModule.toggleStory()">
+                ▶️
+              </button>
+              <span style="font-size: var(--fs-sm); color: var(--color-text-light);">Tekan untuk mendengarkan
+                cerita</span>
+            </div>
+          </div>
+
+          <div class="step-nav" style="margin-top: 24px;">
+            <button class="btn btn-secondary" onclick="BelajarModule.prevStep()">← Kembali</button>
+            <button class="btn btn-success" onclick="BelajarModule.nextStep()">✅ Selesai!</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== LABORATORIUM PAGE ==================== -->
+    <section id="page-lab" class="page lab-page">
+      <div class="page-header">
+        <button class="btn-back" onclick="App.navigate('home')">
+          <span class="back-arrow">←</span> Kembali
+        </button>
+        <div style="text-align: right;">
+          <div class="header-title">🔬 Laboratorium Air</div>
+          <div class="header-subtitle">Eksperimen Virtual</div>
+        </div>
+      </div>
+
+      <div class="lab-content container">
+        <h2 class="lab-title">Simulator Panas-Dingin</h2>
+        <p class="lab-subtitle">Apa yang terjadi pada air di tempat yang berbeda suhu?</p>
+
+        <!-- Split panels -->
+        <div class="lab-split">
+          <!-- Desert -->
+          <div class="lab-panel lab-panel-desert">
+            <div id="desertSunVisual" class="lab-sun-visual">☀️</div>
+            <span class="lab-panel-icon">🏜️</span>
+            <div class="lab-panel-title">Gurun Panas</div>
+            <div class="lab-water-container">
+              <div id="desertWaterFill" class="lab-water-fill desert-water"></div>
+              <div id="desertVapor" class="lab-vapor"></div>
+            </div>
+            <div id="desertTemp" class="lab-temp">38°C</div>
+          </div>
+
+          <!-- Arctic -->
+          <div class="lab-panel lab-panel-arctic">
+            <div id="arcticSunVisual" class="lab-sun-visual" style="opacity: 0.1;">☀️</div>
+            <span class="lab-panel-icon">🧊</span>
+            <div class="lab-panel-title">Kutub Dingin</div>
+            <div class="lab-water-container">
+              <div id="arcticWaterFill" class="lab-water-fill arctic-water"></div>
+            </div>
+            <div id="arcticTemp" class="lab-temp">-8°C</div>
+          </div>
+        </div>
+
+        <!-- Sun Slider -->
+        <div class="lab-slider-section">
+          <div class="lab-slider-header">
+            <span class="lab-slider-icon">☀️</span>
+            <span class="lab-slider-title">Geser untuk atur intensitas matahari!</span>
+          </div>
+          <input type="range" id="labSunSlider" class="range-slider" min="0" max="100" value="50">
+          <div class="lab-slider-labels">
+            <span class="lab-slider-label">🌤️ Rendah</span>
+            <span class="lab-slider-label">🔥 Tinggi</span>
+          </div>
+        </div>
+
+        <!-- Insight -->
+        <div class="lab-insight">
+          <span class="lab-insight-icon">💡</span>
+          <span id="labInsightText" class="lab-insight-text">Geser slider matahari untuk melihat apa yang terjadi pada
+            air. Perhatikan perbedaan antara gurun dan kutub!</span>
+        </div>
+
+        <!-- Actions -->
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button class="btn btn-secondary" style="flex:1;" onclick="LabModule.reset()">🔄 Reset</button>
+          <button class="btn btn-success" style="flex:1;" onclick="LabModule.complete()">✅ Selesai</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== QUIZ PAGE ==================== -->
+    <section id="page-quiz" class="page quiz-page">
+      <div class="page-header">
+        <button class="btn-back" onclick="App.navigate('home')">
+          <span class="back-arrow">←</span> Kembali
+        </button>
+        <div style="text-align: right;">
+          <div class="header-title">🎯 Uji Nyali</div>
+          <div class="header-subtitle">Drag & Drop Quiz</div>
+        </div>
+      </div>
+
+      <!-- Question section -->
+      <div id="quizQuestionSection" class="quiz-content container">
+        <!-- Progress -->
+        <div class="quiz-progress">
+          <span id="quizProgressText" class="quiz-progress-text">Soal 1/5</span>
+          <div class="quiz-progress-bar">
+            <div id="quizProgressFill" class="quiz-progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Question -->
+        <div id="quizQuestion" class="quiz-question"></div>
+
+        <!-- Drag source -->
+        <div id="dragSourceArea" class="drag-source-area"></div>
+
+        <!-- Drop targets -->
+        <div id="dropTargetArea" class="drop-target-area"></div>
+
+        <!-- Hint -->
+        <div id="quizHint" class="quiz-hint hidden">
+          <span class="hint-icon">💡</span>
+          <span id="quizHintText" class="hint-text"></span>
+        </div>
+
+        <!-- Check button -->
+        <div class="quiz-actions">
+          <button class="btn btn-primary quiz-check-btn" onclick="QuizModule.checkAnswer()">
+            ✓ Cek Jawaban
+          </button>
+        </div>
+      </div>
+
+      <!-- Result section -->
+      <div id="quizResult" class="quiz-content container" style="display:none;">
+        <div class="quiz-result">
+          <div id="quizResultIcon" class="quiz-result-icon">🏆</div>
+          <div id="quizStars" class="score-stars"></div>
+          <h2 id="quizResultTitle" class="quiz-result-title">Luar Biasa!</h2>
+          <div id="quizResultScore" class="quiz-result-score">5/5 Benar (100%)</div>
+          <p id="quizResultMsg" class="quiz-result-msg">Kamu sudah sangat memahami siklus air!</p>
+          <div class="quiz-result-actions">
+            <button class="btn btn-secondary" onclick="QuizModule.restart()">🔄 Ulangi</button>
+            <button class="btn btn-primary" onclick="App.navigate('home')">🏠 Home</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GLOSARIUM PAGE ==================== -->
+    <section id="page-glosarium" class="page glosarium-page">
+      <div class="page-header">
+        <button class="btn-back" onclick="App.navigate('home')">
+          <span class="back-arrow">←</span> Kembali
+        </button>
+        <div style="text-align: right;">
+          <div class="header-title">📚 Kamus Bergambar</div>
+          <div class="header-subtitle">Glosarium Siklus Air</div>
+        </div>
+      </div>
+
+      <div class="glosarium-content container">
+        <h2 class="glosarium-title">Istilah Siklus Air</h2>
+        <p class="glosarium-subtitle">Tap 🔊 untuk mendengar cara membacanya!</p>
+
+        <!-- Search -->
+        <div class="glosarium-search search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="glosariumSearch" class="search-input" placeholder="Cari istilah...">
+        </div>
+
+        <!-- Term List -->
+        <div id="glosariumList" class="glosarium-list"></div>
+      </div>
+    </section>
+
+    <!-- ==================== BOTTOM NAVIGATION ==================== -->
+    <nav id="bottomNav" class="bottom-nav hidden">
+      <button class="nav-item active" data-page="home" aria-label="Home">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-item" data-page="belajar" aria-label="Belajar">
+        <span class="nav-icon">📖</span>
+        <span class="nav-label">Belajar</span>
+      </button>
+      <button class="nav-item" data-page="lab" aria-label="Lab">
+        <span class="nav-icon">🔬</span>
+        <span class="nav-label">Lab</span>
+      </button>
+      <button class="nav-item" data-page="quiz" aria-label="Quiz">
+        <span class="nav-icon">🎯</span>
+        <span class="nav-label">Quiz</span>
+      </button>
+    </nav>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- Badge Earned Modal -->
+    <div id="badgeModal" class="modal-overlay" role="dialog" aria-modal="true">
+      <div class="modal">
+        <button id="badgeModalClose" class="modal-close" aria-label="Tutup">✕</button>
+        <span id="badgeModalIcon" class="modal-icon">⭐</span>
+        <h3 class="modal-title">Lencana Baru! 🎉</h3>
+        <div id="badgeModalTitle" class="modal-body"
+          style="font-weight:700; font-size:var(--fs-lg); color:var(--color-sun-warm); margin-bottom:8px;">Nama Badge
+        </div>
+        <p id="badgeModalDesc" class="modal-body">Deskripsi</p>
+        <div class="modal-actions">
+          <button class="btn btn-primary"
+            onclick="document.getElementById('badgeModal').classList.remove('visible')">Keren! 🎊</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Process Info Modal (Siklus Step 2) -->
+    <div id="processModal" class="modal-overlay" role="dialog" aria-modal="true">
+      <div class="modal">
+        <button id="processModalClose" class="modal-close" aria-label="Tutup">✕</button>
+        <span id="processModalIcon" class="modal-icon">☀️</span>
+        <h3 id="processModalTitle" class="modal-title">Evaporasi</h3>
+        <p id="processModalDesc" class="modal-body">Deskripsi proses</p>
+        <div class="modal-actions">
+          <button class="btn-audio"
+            onclick="AudioManager.speak(document.getElementById('processModalTitle').textContent + '. ' + document.getElementById('processModalDesc').textContent)">🔊</button>
+          <button class="btn btn-primary"
+            onclick="document.getElementById('processModal').classList.remove('visible')">Mengerti! 👍</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts (order matters) -->
+  <script src="js/utils.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/badge.js"></script>
+  <script src="js/splash.js"></script>
+  <script src="js/siklus-canvas.js"></script>
+  <script src="js/belajar.js"></script>
+  <script src="js/laboratorium.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/glosarium.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+
+</html>

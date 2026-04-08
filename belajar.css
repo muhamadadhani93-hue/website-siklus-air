@@ -1,0 +1,385 @@
+/* ============================================
+   SIKLUS AIR — Modul Belajar Yuk!
+   ============================================ */
+
+.belajar-page {
+  background: linear-gradient(180deg, #B8E4F9 0%, #E8F6FD 50%, #fff 100%);
+}
+
+/* ---------- Step Content Area ---------- */
+.belajar-content {
+  padding: var(--sp-md) var(--content-padding);
+  flex: 1;
+}
+
+.belajar-step-title {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-extrabold);
+  color: var(--color-text);
+  margin-bottom: var(--sp-sm);
+  line-height: 1.3;
+}
+
+.belajar-step-subtitle {
+  font-size: var(--fs-md);
+  color: var(--color-text-light);
+  margin-bottom: var(--sp-lg);
+  line-height: 1.5;
+}
+
+/* ---------- Step 1: Kenalan dengan Air ---------- */
+.water-fact-hero {
+  text-align: center;
+  padding: var(--sp-xl) var(--sp-md);
+  animation: fadeInUp 0.6s var(--ease-out);
+}
+
+.water-fact-hero .dino-text {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--color-ocean-deep);
+  line-height: 1.4;
+  margin-bottom: var(--sp-lg);
+  background: linear-gradient(135deg, rgba(30,144,255,0.08), rgba(93,173,226,0.08));
+  padding: var(--sp-lg);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid rgba(30,144,255,0.15);
+}
+
+.water-fact-hero .dino-emoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: var(--sp-sm);
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Water percentage visualization */
+.water-meter {
+  display: flex;
+  gap: var(--sp-md);
+  justify-content: center;
+  margin: var(--sp-xl) 0;
+  flex-wrap: wrap;
+}
+
+.water-tube {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+.tube-container {
+  width: 64px;
+  height: 140px;
+  background: rgba(255,255,255,0.5);
+  border: 3px solid rgba(30,144,255,0.2);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-top: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.tube-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -3px;
+  right: -3px;
+  height: 8px;
+  background: rgba(30,144,255,0.2);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.tube-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 0 0 calc(var(--radius-lg) - 3px) calc(var(--radius-lg) - 3px);
+  transition: height 1.5s var(--ease-out);
+}
+
+.tube-fill.salty {
+  background: linear-gradient(180deg, #1E90FF, #0A5EB5);
+  height: 0%;
+}
+
+.tube-fill.salty.animate {
+  height: 97%;
+}
+
+.tube-fill.fresh {
+  background: linear-gradient(180deg, #5DADE2, #87CEEB);
+  height: 0%;
+}
+
+.tube-fill.fresh.animate {
+  height: 3%;
+}
+
+.tube-fill .tube-bubbles {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tube-label {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+}
+
+.tube-percent {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-extrabold);
+  color: var(--color-ocean);
+}
+
+.tube-desc {
+  font-size: var(--fs-xs);
+  color: var(--color-text-light);
+  text-align: center;
+  max-width: 80px;
+}
+
+/* ---------- Step 2: Panggung Siklus ---------- */
+.siklus-container {
+  width: 100%;
+  aspect-ratio: 4/3;
+  max-height: 420px;
+  background: linear-gradient(180deg, #87CEEB 0%, #B8E4F9 40%, #E8F6FD 70%, #81C784 78%, #4CAF50 82%, #8B6914 88%, #1E90FF 95%);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow-float);
+  touch-action: none;
+  cursor: pointer;
+}
+
+/* Tap zones */
+.tap-zone {
+  position: absolute;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+  z-index: 5;
+}
+
+.tap-zone:hover, .tap-zone:active {
+  transform: scale(1.1);
+}
+
+.tap-zone .tap-label {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-text);
+  color: white;
+  font-size: var(--fs-xs);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.tap-zone:hover .tap-label {
+  opacity: 1;
+}
+
+.tap-zone-sun {
+  top: 5%;
+  right: 8%;
+  font-size: 3rem;
+  animation: pulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 15px rgba(255,217,61,0.6));
+}
+
+.tap-zone-cloud {
+  top: 12%;
+  left: 25%;
+  font-size: 2.8rem;
+  animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.1));
+}
+
+.tap-zone-rain {
+  top: 32%;
+  left: 40%;
+  font-size: 2rem;
+}
+
+.tap-zone-leaf {
+  bottom: 25%;
+  left: 15%;
+  font-size: 2.2rem;
+  animation: floatSlow 3.5s ease-in-out infinite;
+}
+
+.tap-zone-mountain {
+  bottom: 18%;
+  right: 15%;
+  font-size: 2.8rem;
+}
+
+/* Siklus instruction */
+.siklus-instruction {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  padding: var(--sp-md);
+  background: var(--color-glass-strong);
+  border-radius: var(--radius-md);
+  margin-top: var(--sp-md);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+.siklus-instruction .instr-icon {
+  font-size: 1.5rem;
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+.siklus-instruction .instr-text {
+  font-size: var(--fs-sm);
+  color: var(--color-text);
+  font-weight: var(--fw-medium);
+}
+
+/* Speed control slider */
+.speed-control {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  padding: var(--sp-sm) var(--sp-md);
+  background: var(--color-glass);
+  border-radius: var(--radius-full);
+  margin-top: var(--sp-sm);
+}
+
+.speed-control .speed-label {
+  font-size: var(--fs-xs);
+  color: var(--color-text-light);
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+}
+
+/* ---------- Particle animations overlay ---------- */
+.particles-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 4;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.particle-water {
+  width: 6px;
+  height: 8px;
+  background: linear-gradient(180deg, rgba(93,173,226,0.8), rgba(30,144,255,0.6));
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+
+.particle-vapor {
+  width: 8px;
+  height: 8px;
+  background: rgba(255,255,255,0.5);
+  filter: blur(2px);
+}
+
+/* ---------- Step 3: Cerita Si Tetes Air ---------- */
+.story-container {
+  padding: var(--sp-md);
+}
+
+.story-card {
+  background: var(--color-glass-strong);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-xl);
+  box-shadow: var(--shadow-card);
+  border: 1.5px solid rgba(255,255,255,0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.story-illustration {
+  text-align: center;
+  font-size: 4rem;
+  margin-bottom: var(--sp-lg);
+  animation: float 3s ease-in-out infinite;
+}
+
+.story-text {
+  font-size: var(--fs-md);
+  color: var(--color-text);
+  line-height: 1.8;
+  text-align: left;
+}
+
+.story-text .highlight {
+  background: linear-gradient(180deg, transparent 50%, rgba(255,217,61,0.35) 50%);
+  font-weight: var(--fw-semibold);
+  padding: 0 2px;
+}
+
+.story-text .highlight.active-read {
+  background: linear-gradient(180deg, transparent 50%, rgba(30,144,255,0.3) 50%);
+  color: var(--color-ocean-deep);
+}
+
+/* Story audio controls */
+.story-audio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-md);
+  margin-top: var(--sp-xl);
+  padding: var(--sp-md);
+  background: linear-gradient(135deg, rgba(30,144,255,0.08), rgba(93,173,226,0.05));
+  border-radius: var(--radius-lg);
+}
+
+.story-play-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-ocean), var(--color-ocean-deep));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: var(--shadow-button);
+  transition: all var(--transition-fast);
+}
+
+.story-play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.story-play-btn:active {
+  transform: scale(0.95);
+}
+
+/* Navigation buttons between steps */
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--sp-lg) var(--content-padding);
+  gap: var(--sp-md);
+}
+
+.step-nav .btn {
+  flex: 1;
+  max-width: 180px;
+}

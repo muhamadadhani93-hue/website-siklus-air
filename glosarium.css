@@ -1,0 +1,110 @@
+/* ============================================
+   SIKLUS AIR — Kamus Bergambar (Glosarium)
+   ============================================ */
+
+.glosarium-page {
+  background: linear-gradient(180deg, #B8E4F9 0%, #E8F6FD 60%, #fff 100%);
+}
+
+.glosarium-content {
+  padding: var(--sp-md) var(--content-padding);
+  flex: 1;
+}
+
+.glosarium-title {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-extrabold);
+  color: var(--color-text);
+  margin-bottom: var(--sp-xs);
+}
+
+.glosarium-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--color-text-light);
+  margin-bottom: var(--sp-lg);
+}
+
+/* ---------- Search ---------- */
+.glosarium-search {
+  margin-bottom: var(--sp-lg);
+}
+
+/* ---------- Term List ---------- */
+.glosarium-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+
+.glosarium-item {
+  background: var(--color-glass-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255,255,255,0.5);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-md);
+  transition: all var(--transition-normal);
+  animation: fadeInUp 0.4s var(--ease-out);
+}
+
+.glosarium-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float);
+}
+
+.glosarium-item .term-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(30,144,255,0.08), rgba(93,173,226,0.08));
+  border-radius: var(--radius-md);
+}
+
+.glosarium-item .term-content {
+  flex: 1;
+}
+
+.glosarium-item .term-name {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.glosarium-item .term-pronunciation {
+  font-size: var(--fs-xs);
+  color: var(--color-ocean);
+  font-weight: var(--fw-medium);
+  font-style: italic;
+  margin-bottom: var(--sp-sm);
+}
+
+.glosarium-item .term-definition {
+  font-size: var(--fs-sm);
+  color: var(--color-text-light);
+  line-height: 1.5;
+}
+
+.glosarium-item .term-audio-btn {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* No results */
+.glosarium-empty {
+  text-align: center;
+  padding: var(--sp-2xl);
+  color: var(--color-text-light);
+}
+
+.glosarium-empty .empty-emoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: var(--sp-md);
+}
